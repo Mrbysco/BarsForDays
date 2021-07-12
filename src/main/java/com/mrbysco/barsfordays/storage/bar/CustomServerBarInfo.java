@@ -179,7 +179,6 @@ public class CustomServerBarInfo extends ServerBarInfo {
 		if (this.players.contains(serverPlayerEntity.getUUID())) {
 			this.addPlayer(serverPlayerEntity);
 		}
-
 	}
 
 	public void onPlayerDisconnect(ServerPlayerEntity serverPlayerEntity) {

@@ -15,7 +15,11 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 public class OverlayHandler extends AbstractGui {
@@ -37,7 +41,28 @@ public class OverlayHandler extends AbstractGui {
 			int scaledWidth = minecraft.getWindow().getGuiScaledWidth();
 			int scaledHeight = minecraft.getWindow().getGuiScaledHeight();
 
+			boolean previousInvertX = false;
+			boolean previousInvertY = false;
+			int previousX = 0;
+			int previousY = 0;
+			int naturalYOffset = 0;
 			for(ClientBarInfo clientBarInfo : events.values()) {
+				if(previousX == clientBarInfo.getXPos() && previousY == clientBarInfo.getYPos() &&
+						previousInvertX == clientBarInfo.isXInverted() && previousInvertY == clientBarInfo.isYInverted()) {
+					previousInvertX = clientBarInfo.isXInverted();
+					previousInvertY = clientBarInfo.isYInverted();
+					previousX = clientBarInfo.getXPos();
+					previousY = clientBarInfo.getYPos();
+					naturalYOffset += 10 + minecraft.font.lineHeight;
+				} else {
+					previousInvertX = clientBarInfo.isXInverted();
+					previousInvertY = clientBarInfo.isYInverted();
+					previousX = clientBarInfo.getXPos();
+					previousY = clientBarInfo.getYPos();
+					naturalYOffset = 0;
+				}
+
+//				System.out.println(clientBarInfo.getName().getString() + " " + clientBarInfo.getXPos() + " " + clientBarInfo.getYPos());
 				double scale = clientBarInfo.getScale();
 				if(scale < 0.5)
 					scale = 0.5;
@@ -50,9 +75,9 @@ public class OverlayHandler extends AbstractGui {
 				if(clientBarInfo.isXInverted())
 					offsetX = (int)(scaledWidth * scaleMultiplier) - 184 - offsetX;
 
-				int offsetY = 0;
+				int offsetY = 0 + naturalYOffset;
 				if(clientBarInfo.getYPos() > 0)
-					offsetY = (int)((clientBarInfo.getYPos() * scaleMultiplier));
+					offsetY = (int)(((clientBarInfo.getYPos() + naturalYOffset) * scaleMultiplier));
 				if(clientBarInfo.isYInverted())
 					offsetY = (int)(scaledHeight * scaleMultiplier) - offsetY;
 
@@ -86,6 +111,10 @@ public class OverlayHandler extends AbstractGui {
 				RenderSystem.disableRescaleNormal();
 				RenderSystem.disableBlend();
 				RenderSystem.popMatrix();
+
+				if (offsetY >= minecraft.getWindow().getGuiScaledHeight() / 3) {
+					break;
+				}
 			}
 		}
 	}
@@ -118,6 +147,19 @@ public class OverlayHandler extends AbstractGui {
 		} else {
 			events.get(packet.getId()).update(packet);
 		}
+		sortByValue();
+	}
+
+	public static void sortByValue() {
+		List<Entry<UUID, ClientBarInfo>> list = new ArrayList<>(events.entrySet());
+		list.sort(Entry.comparingByValue());
+
+		Map<UUID, ClientBarInfo> result = new LinkedHashMap<>();
+		for (Entry<UUID, ClientBarInfo> entry : list) {
+			result.put(entry.getKey(), entry.getValue());
+		}
+		events.clear();
+		events.putAll(result);
 	}
 
 	public static void reset() {

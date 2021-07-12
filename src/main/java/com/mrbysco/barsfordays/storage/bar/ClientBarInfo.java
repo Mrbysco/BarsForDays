@@ -4,7 +4,7 @@ import com.mrbysco.barsfordays.network.message.UpdateCustomBarPacket;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
 
-public class ClientBarInfo extends BarInfo {
+public class ClientBarInfo extends BarInfo implements Comparable<ClientBarInfo> {
 	protected float targetPercent;
 	protected long setTime;
 
@@ -53,5 +53,11 @@ public class ClientBarInfo extends BarInfo {
 				this.setXInverted(packet.isXInverted());
 				this.setYInverted(packet.isYInverted());
 		}
+	}
+
+	@Override
+	public int compareTo(ClientBarInfo another) {
+		return ((this.xPos < another.xPos) && (this.yPos < another.yPos) && (this.invertX != another.invertX) && (this.invertY != another.invertY)) ? -1 :
+				(((this.xPos == another.yPos) && (this.xPos == another.yPos) && (this.invertX == another.invertX) && (this.invertY == another.invertY)) ? 0 : 1);
 	}
 }
