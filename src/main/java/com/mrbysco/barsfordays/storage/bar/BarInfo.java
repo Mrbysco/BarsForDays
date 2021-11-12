@@ -119,7 +119,7 @@ public abstract class BarInfo {
 		this.invertY = invertY;
 	}
 
-	public static enum Color {
+	public enum Color {
 		PINK("pink", TextFormatting.RED),
 		BLUE("blue", TextFormatting.BLUE),
 		RED("red", TextFormatting.DARK_RED),
@@ -131,7 +131,7 @@ public abstract class BarInfo {
 		private final String name;
 		private final TextFormatting formatting;
 
-		private Color(String name, TextFormatting formatting) {
+		Color(String name, TextFormatting formatting) {
 			this.name = name;
 			this.formatting = formatting;
 		}
@@ -155,7 +155,7 @@ public abstract class BarInfo {
 		}
 	}
 
-	public static enum Overlay {
+	public enum Overlay {
 		PROGRESS("progress"),
 		NOTCHED_6("notched_6"),
 		NOTCHED_10("notched_10"),
@@ -164,7 +164,7 @@ public abstract class BarInfo {
 
 		private final String name;
 
-		private Overlay(String name) {
+		Overlay(String name) {
 			this.name = name;
 		}
 

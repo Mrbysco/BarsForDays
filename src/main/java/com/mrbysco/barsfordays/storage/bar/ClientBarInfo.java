@@ -58,6 +58,6 @@ public class ClientBarInfo extends BarInfo implements Comparable<ClientBarInfo> 
 	@Override
 	public int compareTo(ClientBarInfo another) {
 		return ((this.xPos < another.xPos) && (this.yPos < another.yPos) && (this.invertX != another.invertX) && (this.invertY != another.invertY)) ? -1 :
-				(((this.xPos == another.yPos) && (this.xPos == another.yPos) && (this.invertX == another.invertX) && (this.invertY == another.invertY)) ? 0 : 1);
+				(((this.xPos == another.xPos) && (this.yPos == another.yPos) && (this.invertX == another.invertX) && (this.invertY == another.invertY)) ? 0 : 1);
 	}
 }

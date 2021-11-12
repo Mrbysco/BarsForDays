@@ -75,7 +75,7 @@ public class OverlayHandler extends AbstractGui {
 				if(clientBarInfo.isXInverted())
 					offsetX = (int)(scaledWidth * scaleMultiplier) - 184 - offsetX;
 
-				int offsetY = 0 + naturalYOffset;
+				int offsetY = naturalYOffset;
 				if(clientBarInfo.getYPos() > 0)
 					offsetY = (int)(((clientBarInfo.getYPos() + naturalYOffset) * scaleMultiplier));
 				if(clientBarInfo.isYInverted())
@@ -104,7 +104,7 @@ public class OverlayHandler extends AbstractGui {
 				ITextComponent itextcomponent = clientBarInfo.getName();
 				int textWidth = minecraft.font.width(itextcomponent);
 				posX += 91 - textWidth / 2;
-				posY += -9;
+				posY -= 9;
 				minecraft.font.drawShadow(poseStack, itextcomponent, (float)posX + offsetX, (float)posY + offsetY, 16777215);
 
 				if(scale > 0) RenderSystem.scaled(scaleMultiplier, scaleMultiplier, -0);

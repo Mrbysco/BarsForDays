@@ -188,12 +188,12 @@ public class UpdateCustomBarPacket {
 		return invertY;
 	}
 
-	public static enum Operation {
+	public enum Operation {
 		ADD,
 		REMOVE,
 		UPDATE_PCT,
 		UPDATE_NAME,
 		UPDATE_STYLE,
-		UPDATE_POSITION;
+		UPDATE_POSITION
 	}
 }
