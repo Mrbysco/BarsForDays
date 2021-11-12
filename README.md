@@ -1,4 +1,4 @@
-[![build](https://github.com/Mrbysco/BarsForDays/actions/workflows/build.yml/badge.svg)](https://github.com/Mrbysco/BarsForDays/actions/workflows/build.yml) [![](http://cf.way2muchnoise.eu/versions/499396_latest.svg)](https://www.curseforge.com/minecraft/mc-mods/bars-for-days)
+[![build](https://github.com/Mrbysco/BarsForDays/actions/workflows/build.yml/badge.svg)](https://github.com/Mrbysco/BarsForDays/actions/workflows/build.yml) [![](http://cf.way2muchnoise.eu/versions/499396.svg)](https://www.curseforge.com/minecraft/mc-mods/bars-for-days)
 
 # Bars for Days Mod #
 
