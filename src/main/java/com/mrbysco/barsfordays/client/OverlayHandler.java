@@ -46,8 +46,11 @@ public class OverlayHandler extends AbstractGui {
 			int previousX = 0;
 			int previousY = 0;
 			int naturalYOffset = 0;
+			ClientBarInfo previousBar = null;
 			for(ClientBarInfo clientBarInfo : events.values()) {
-				if(previousX == clientBarInfo.getXPos() && previousY == clientBarInfo.getYPos() &&
+				if(previousBar != null &&
+						previousBar.isCenterY() == clientBarInfo.isCenterY() && previousBar.isCenterX() == clientBarInfo.isCenterX() &&
+						previousX == clientBarInfo.getXPos() && previousY == clientBarInfo.getYPos() &&
 						previousInvertX == clientBarInfo.isXInverted() && previousInvertY == clientBarInfo.isYInverted()) {
 					previousInvertX = clientBarInfo.isXInverted();
 					previousInvertY = clientBarInfo.isYInverted();
@@ -61,34 +64,35 @@ public class OverlayHandler extends AbstractGui {
 					previousY = clientBarInfo.getYPos();
 					naturalYOffset = 0;
 				}
+				previousBar = clientBarInfo;
 
-//				System.out.println(clientBarInfo.getName().getString() + " " + clientBarInfo.getXPos() + " " + clientBarInfo.getYPos());
 				double scale = clientBarInfo.getScale();
 				if(scale < 0.5)
 					scale = 0.5;
 				double scaleMultiplier = 1 / scale;
 
-
 				int offsetX = 0;
 				if(clientBarInfo.getXPos() > 0)
 					offsetX = (int)((clientBarInfo.getXPos() * scaleMultiplier));
 				if(clientBarInfo.isXInverted())
-					offsetX = (int)(scaledWidth * scaleMultiplier) - 184 - offsetX;
+					offsetX = (int)(scaledWidth * scaleMultiplier) / 2 - (92 - offsetX);
+
 
 				int offsetY = naturalYOffset;
 				if(clientBarInfo.getYPos() > 0)
 					offsetY = (int)(((clientBarInfo.getYPos() + naturalYOffset) * scaleMultiplier));
 				if(clientBarInfo.isYInverted())
-					offsetY = (int)(scaledHeight * scaleMultiplier) - offsetY;
+					offsetY = (int)(scaledHeight * scaleMultiplier) / 2 - offsetY;
 
 
 				int posX = 92;
 				if(clientBarInfo.isCenterX())
-					posX += scaledWidth / 2;
+					posX += (scaledWidth / 2) - 92;
 
 				int posY = 12;
+
 				if(clientBarInfo.isCenterY())
-					posY += scaledHeight / 2;
+					posY += (scaledHeight / 2);
 
 				RenderSystem.pushMatrix();
 				RenderSystem.enableRescaleNormal();
